@@ -105,18 +105,6 @@ You can use:
 - **cuBLAS** via `torch.matmul` with appropriate layouts
 - Any approach that runs on CUDA
 
-### Key Optimization Ideas to Explore
-
-- **Fuse projections**: left/right/gates share the same input `x` — compute all 5 linear projections in one batched matmul
-- **Avoid redundant norm calls**: `x = norm(x)` is called once; don't re-normalize
-- **The einsum is the bottleneck**: `einsum("... i k d, ... j k d -> ... i j d", left, right)` is equivalent to a batched outer-product over the k dimension — this is `O(N^2 * H * N)` ops. Consider:
-  - `torch.einsum` (PyTorch may use cuBLAS internally)
-  - Reshape to matmul: `out[b, i, j, d] = left[b, i, :, d] @ right[b, j, :, d].T` → loop over d or batch differently
-  - `torch.bmm` after reshaping `[bs*N, N, H]` tensors
-  - Custom Triton kernel that tiles over i, j, k dimensions
-- **Mixed precision**: The einsum is expensive — bfloat16 or float16 in the inner product may help
-- **Flash-attention-style tiling**: TriMul has the same N×N structure as attention
-
 ## Parsing results.json
 
 After each submission, read `results.json`. Look for:

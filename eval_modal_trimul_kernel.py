@@ -189,7 +189,8 @@ def evaluate_kernel(kernel_code: str, mode: str = "leaderboard") -> str:
             torch.backends.cuda.matmul.allow_tf32 = old_matmul
             torch.backends.cudnn.allow_tf32 = old_cudnn
 
-    # ── Shared eval helpers ──────────────────────────────────────────────────
+    # matches skydiscover modal_eval.py _eval_triton_impl
+    _os.environ.setdefault("PYTORCH_CUDA_ALLOC_CONF", "expandable_segments:True")
 
     def _clone(data):
         if isinstance(data, tuple):
@@ -204,7 +205,10 @@ def evaluate_kernel(kernel_code: str, mode: str = "leaderboard") -> str:
             fields = {f.name: _clone(getattr(data, f.name)) for f in dataclasses.fields(data)}
             return type(data)(**fields)
         if isinstance(data, torch.nn.Module):
-            return copy.deepcopy(data)
+            cloned = copy.deepcopy(data)
+            if hasattr(data, 'seq_len'):
+                cloned.seq_len = data.seq_len
+            return cloned
         return data
 
     def _stats(durations):
@@ -217,65 +221,6 @@ def evaluate_kernel(kernel_code: str, mode: str = "leaderboard") -> str:
         else:
             std, err = 0.0, 0.0
         return {"runs": n, "mean": avg, "std": std, "err": err}
-
-    def _bench_single(kernel_fn, bench_args, max_time_ns=None):
-        if max_time_ns is None:
-            max_time_ns = BENCH_MAX_TIME_NS
-
-        data = generate_input(**bench_args)
-        data_copy = _clone(data)
-        ctx = torch.no_grad() if BENCH_NO_GRAD else contextlib.nullcontext()
-
-        with ctx:
-            output = kernel_fn(data)
-            torch.cuda.synchronize()
-            passed, msg = check_implementation(data_copy, output)
-            if not passed:
-                return None, f"Benchmark correctness: {msg}"
-            del output
-
-        durations_ns = []
-        bm_start = time.perf_counter_ns()
-
-        with ctx:
-            for i in range(BENCH_MAX_REPEATS):
-                if BENCH_USE_CUDA_EVENTS:
-                    s = torch.cuda.Event(enable_timing=True)
-                    e = torch.cuda.Event(enable_timing=True)
-                    s.record()
-                    output = kernel_fn(data)
-                    e.record()
-                    torch.cuda.synchronize()
-                    duration_ns = s.elapsed_time(e) * 1e6  # ms -> ns
-                else:
-                    t0 = time.perf_counter_ns()
-                    output = kernel_fn(data)
-                    torch.cuda.synchronize()
-                    duration_ns = time.perf_counter_ns() - t0
-
-                del output
-                durations_ns.append(duration_ns)
-
-                if i > 1:
-                    st = _stats(durations_ns)
-                    if st["mean"] > 0 and st["err"] / st["mean"] < BENCH_REL_ERROR:
-                        break
-                    if st["mean"] * st["runs"] > max_time_ns:
-                        break
-                    if (time.perf_counter_ns() - bm_start) > BENCH_WALL_TIMEOUT_NS:
-                        break
-
-        return _stats(durations_ns), None
-
-    def _warmup(kernel_fn, bench_args):
-        if BENCH_WARMUP_STYLE == "timed_calls":
-            data = generate_input(**bench_args)
-            start = time.perf_counter()
-            while time.perf_counter() - start < 0.2:
-                kernel_fn(data)
-                torch.cuda.synchronize()
-        else:
-            _bench_single(kernel_fn, bench_args, max_time_ns=10e7)  # 10 ms
 
     # ── Load submission ──────────────────────────────────────────────────────
 
@@ -305,16 +250,17 @@ def evaluate_kernel(kernel_code: str, mode: str = "leaderboard") -> str:
             "failure_stage": "import",
         })
 
-    # ── Correctness tests ────────────────────────────────────────────────────
+    # ── Correctness tests (no_grad to reduce autograd memory) ───────────────
 
     test_details = []
     tests_passed = 0
-    for tc in TEST_CASES:
+    for i, tc in enumerate(TEST_CASES):
         try:
             data = generate_input(**tc)
             data_copy = _clone(data)
             torch.cuda.synchronize()
-            output = custom_kernel(data)
+            with torch.no_grad():
+                output = custom_kernel(data)
             torch.cuda.synchronize()
             del data
             gc.collect()
@@ -373,32 +319,85 @@ def evaluate_kernel(kernel_code: str, mode: str = "leaderboard") -> str:
             "platform": "modal-h100",
         })
 
-    # ── Warmup ───────────────────────────────────────────────────────────────
+    # ── Warmup: 3 kernel calls to trigger compilation ────────────────────────
 
-    gc.collect()
-    torch.cuda.empty_cache()
-    _warmup(custom_kernel, BENCHMARK_CASES[0])
+    wdata = generate_input(**BENCHMARK_CASES[0])
+    for _ in range(3):
+        custom_kernel(wdata)
+        torch.cuda.synchronize()
 
     # ── Benchmarks ───────────────────────────────────────────────────────────
 
+    ctx = torch.no_grad() if BENCH_NO_GRAD else contextlib.nullcontext()
     benchmark_details = []
     bench_means_ns = []
 
     for bench_args in BENCHMARK_CASES:
-        st, err = _bench_single(custom_kernel, bench_args)
-        if err:
+        data = generate_input(**bench_args)
+        data_copy = _clone(data)
+
+        # Correctness check, then free GPU memory before ref kernel runs
+        with ctx:
+            output = custom_kernel(data)
+            torch.cuda.synchronize()
+            del data
+            gc.collect()
+            torch.cuda.empty_cache()
+            passed, msg = check_implementation(data_copy, output)
+            del data_copy, output
+            gc.collect()
+            torch.cuda.empty_cache()
+
+        if not passed:
             return _json.dumps({
                 "success": False,
                 "tests_passed": tests_passed,
                 "tests_total": len(TEST_CASES),
                 "test_details": test_details,
-                "error": err,
+                "error": f"Benchmark correctness: {msg}",
                 "gpu_name": gpu_name,
                 "torch_version": torch_ver,
                 "platform": "modal-h100",
                 "failure_stage": "benchmark",
             })
 
+        # Regenerate fresh data for timed runs
+        data = generate_input(**bench_args)
+
+        durations_ns = []
+        bm_start = time.perf_counter_ns()
+
+        with ctx:
+            for t in range(BENCH_MAX_REPEATS):
+                torch.cuda.synchronize()  # flush any pending work before timing
+
+                if BENCH_USE_CUDA_EVENTS:
+                    s = torch.cuda.Event(enable_timing=True)
+                    e = torch.cuda.Event(enable_timing=True)
+                    s.record()
+                    output = custom_kernel(data)
+                    e.record()
+                    torch.cuda.synchronize()
+                    duration_ns = s.elapsed_time(e) * 1e6  # ms -> ns
+                else:
+                    t0 = time.perf_counter_ns()
+                    output = custom_kernel(data)
+                    torch.cuda.synchronize()
+                    duration_ns = time.perf_counter_ns() - t0
+
+                del output
+                durations_ns.append(duration_ns)
+
+                if t > 1:
+                    st = _stats(durations_ns)
+                    if st["mean"] > 0 and st["err"] / st["mean"] < BENCH_REL_ERROR:
+                        break
+                    if st["mean"] * st["runs"] > BENCH_MAX_TIME_NS:
+                        break
+                    if (time.perf_counter_ns() - bm_start) > BENCH_WALL_TIMEOUT_NS:
+                        break
+
+        st = _stats(durations_ns)
         mean_us = st["mean"] / 1e3
         err_us = st["err"] / 1e3
         benchmark_details.append({
