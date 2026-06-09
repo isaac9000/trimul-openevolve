@@ -1,0 +1,27 @@
+experiment	agent_iteration	commit	time_us	status	description
+1	0	HEAD	10969.84	keep	Baseline 'starting_point' — initial benchmark before any agent changes
+2	1	HEAD	8948.57	keep	Replace baseline with optimized TriMul: fuse all 5 linear projections into a single matmul, use torc
+3	2	HEAD	9007.42	discard	Cast left/right to bfloat16 before bmm to use tensor cores, then cast back to float32. Expected spee
+4	3	HEAD	8964.66	discard	Use torch.matmul on [bs, H, N, N] tensors with explicit contiguous() calls instead of reshape to [bs
+5	4	HEAD	9011.89	discard	Use torch.compile(fullgraph=True, mode='reduce-overhead') to fuse elementwise ops and optimize memor
+6	5	HEAD	11226.95	discard	Use Triton fuse_gate_permute_kernel to fuse sigmoid+mask+permute into [bs*H,N,N] layout in one pass,
+7	6	HEAD	9046.31	discard	Interleave projection and gate weights as [left_proj, left_gate, right_proj, right_gate, out_gate] s
+8	7	HEAD	9030.87	discard	Replace permute+reshape+bmm with torch.einsum('bikh,bjkh->bijh') hoping PyTorch dispatches to cuBLAS
+9	8	HEAD	9004.98	discard	Split fused 5H matmul into 2 separate matmuls: [2H,dim] for left+left_gate and [3H,dim] for right+ri
+10	9	HEAD	8992.78	discard	Custom CUDA kernels to fuse sigmoid+mask+permute into [bs*H,N,N] layout and permute [bs*H,N,N] back 
+11	10	HEAD	9014.68	discard	Combine single fused 5H matmul with custom CUDA permute kernels. Use interleaved [lp,lg,rp,rg,og] we
+12	11	HEAD	9037.35	discard	Redesign CUDA kernel to read directly from full [bs,N,N,5H] proj tensor with configurable proj/gate 
+13	12	HEAD	11694.52	discard	Use fp16 for projection matmul and bmm contraction — expected 2x tensor core throughput. Much slower
+14	13	HEAD	11526.00	discard	Cache concatenated weight tensor across calls to avoid repeated torch.cat allocation. Module-level d
+15	14	HEAD	11380.21	discard	Work on flat [bs*N*N, H] proj slices and mask_flat=[bs*N*N,1] to avoid proj.reshape to 4D, then resh
+16	15	HEAD	11200.53	discard	Restore exact #2 logic but use tensor method .sigmoid() instead of torch.sigmoid() to avoid dispatch
+17	16	HEAD	9004.29	discard	Replace final F.linear with explicit torch.mm(out_flat, W.t()).reshape() to avoid F.linear overhead.
+18	17	HEAD	9065.13	discard	Cache concatenated weight tensor using data_ptr+H+dim tuple key to avoid torch.cat on every call. Py
+19	18	HEAD	9063.72	discard	Keep #2 logic but skip .contiguous() after final permute(0,2,3,1) to avoid a memory copy before laye
+20	19	HEAD	9154.03	discard	Triton kernel for N×N contraction reading [bs,N,N,H] directly without permute. Serial loop over k di
+21	20	HEAD	9377.15	discard	Replace F.linear(x_flat, all_weights) with torch.mm(x_flat, all_weights.t()) to avoid F.linear overh
+22	21	HEAD	9023.23	discard	Pre-transpose weights to [dim, 5H] contiguous by cat-ing .t() views, then use torch.mm(x_flat, W_T) 
+23	22	HEAD	9020.05	discard	Enable TF32 for matmuls (torch.backends.cuda.matmul.allow_tf32=True) to use H100 tensor cores at ~8x
+24	23	HEAD	11270.33	discard	Replace 3 separate sigmoid calls with one sigmoid over all 3H gate values (proj[...,2H:]) to reduce 
+25	24	HEAD	9006.93	discard	Restore exact #2 code (fused 5H matmul + permute+bmm). Container was polluted by previous experiment
+26	25	HEAD	9018.07	discard	Cast left_t/right_t to bf16 AFTER permute+reshape (on contiguous [bs*H,N,N] tensors) for tensor core
