@@ -1,0 +1,232 @@
+2026-06-11 21:40:20,532 - openevolve.controller - INFO - Logging to trimul_kernel/openevolve_runs/run1/logs/openevolve_20260611_214020.log
+2026-06-11 21:40:20,892 - openevolve.controller - INFO - Set random seed to 42 for reproducibility
+2026-06-11 21:40:22,443 - openevolve.llm.openai - INFO - Initialized OpenAI LLM with model: claude-sonnet-4-6
+2026-06-11 21:40:22,444 - openevolve.llm.ensemble - INFO - Initialized LLM ensemble with models: claude-sonnet-4-6 (weight: 1.00)
+2026-06-11 21:40:22,617 - openevolve.prompt.sampler - INFO - Initialized prompt sampler
+2026-06-11 21:40:22,720 - openevolve.prompt.sampler - INFO - Set custom templates: system=evaluator_system_message, user=None
+2026-06-11 21:40:22,721 - openevolve.database - INFO - Initialized program database with 0 programs
+2026-06-11 21:40:22,779 - openevolve.evaluator - INFO - Successfully loaded evaluation function from trimul_kernel/openevolve_evaluator.py
+2026-06-11 21:40:22,780 - openevolve.evaluator - WARNING - Configuration has 'cascade_evaluation: true' but evaluator 'trimul_kernel/openevolve_evaluator.py' does not define 'evaluate_stage1' function. This will fall back to direct evaluation, making the cascade setting useless. Consider setting 'cascade_evaluation: false' or implementing cascade functions.
+2026-06-11 21:40:22,781 - openevolve.evaluator - INFO - Initialized evaluator with trimul_kernel/openevolve_evaluator.py
+2026-06-11 21:40:22,783 - openevolve.controller - INFO - Initialized OpenEvolve with trimul_kernel/starting_point.py
+2026-06-11 21:40:22,784 - openevolve.controller - INFO - Adding initial program to database
+2026-06-11 21:40:42,489 - openevolve.evaluator - INFO - Evaluated program 2084f434-b83b-483e-9366-3c56b9a36b80 in 19.70s: combined_score=90.5631, score=90.5631, geomean_us=11042.0290
+2026-06-11 21:40:42,490 - openevolve.database - INFO - New MAP-Elites cell occupied in island 0: {'complexity': 5, 'diversity': 0}
+2026-06-11 21:40:42,492 - openevolve.process_parallel - INFO - Initialized process parallel controller with 1 workers
+2026-06-11 21:40:42,494 - openevolve.process_parallel - INFO - Set max None tasks per child
+2026-06-11 21:40:42,495 - openevolve.process_parallel - INFO - Started process pool with 1 processes
+2026-06-11 21:40:42,496 - openevolve.controller - INFO - Using island-based evolution with 2 islands
+2026-06-11 21:40:42,496 - openevolve.database - INFO - Island Status:
+2026-06-11 21:40:42,498 - openevolve.database - INFO -  * Island 0: 1 programs, best=90.5631, avg=90.5631, diversity=0.00, gen=0 (best: 2084f434-b83b-483e-9366-3c56b9a36b80)
+2026-06-11 21:40:42,499 - openevolve.database - INFO -    Island 1: 0 programs, best=0.0000, avg=0.0000, diversity=0.00, gen=0
+2026-06-11 21:40:42,500 - openevolve.process_parallel - INFO - Starting process-based evolution from iteration 1 for 25 iterations (total: 26)
+2026-06-11 21:40:42,506 - openevolve.process_parallel - INFO - Early stopping disabled
+2026-06-11 21:40:42,779 - openevolve.prompt.sampler - INFO - Set custom templates: system=evaluator_system_message, user=None
+2026-06-11 21:40:42,801 - openevolve.evaluator - INFO - Successfully loaded evaluation function from trimul_kernel/openevolve_evaluator.py
+2026-06-11 21:40:42,809 - openevolve.evaluator - WARNING - Configuration has 'cascade_evaluation: true' but evaluator 'trimul_kernel/openevolve_evaluator.py' does not define 'evaluate_stage1' function. This will fall back to direct evaluation, making the cascade setting useless. Consider setting 'cascade_evaluation: false' or implementing cascade functions.
+2026-06-11 21:40:42,811 - openevolve.evaluator - INFO - Initialized evaluator with trimul_kernel/openevolve_evaluator.py
+2026-06-11 21:40:42,816 - openevolve.llm.ensemble - INFO - Sampled model: claude-sonnet-4-6
+2026-06-11 21:41:24,712 - httpx - INFO - HTTP Request: POST https://api.anthropic.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-11 21:41:44,218 - openevolve.evaluator - INFO - Evaluated program 23118045-94cf-4b78-9e8f-12f619099f92 in 19.49s: combined_score=106.8323, score=106.8323, geomean_us=9360.4680
+2026-06-11 21:41:44,222 - openevolve.llm.ensemble - INFO - Sampled model: claude-sonnet-4-6
+2026-06-11 21:41:44,222 - openevolve.database - INFO - New MAP-Elites cell occupied in island 0: {'complexity': 9, 'diversity': 5}
+2026-06-11 21:41:44,225 - openevolve.database - INFO - New best program 23118045-94cf-4b78-9e8f-12f619099f92 replaces 2084f434-b83b-483e-9366-3c56b9a36b80 (combined_score: 90.5631 → 106.8323, +16.2692)
+2026-06-11 21:41:44,226 - openevolve.process_parallel - INFO - Iteration 1: Program 23118045-94cf-4b78-9e8f-12f619099f92 (parent: 2084f434-b83b-483e-9366-3c56b9a36b80) completed in 61.41s
+2026-06-11 21:41:44,228 - openevolve.process_parallel - INFO - Metrics: combined_score=106.8323, score=106.8323, geomean_us=9360.4680
+2026-06-11 21:41:44,229 - openevolve.process_parallel - INFO - 🌟 New best solution found at iteration 1: 23118045-94cf-4b78-9e8f-12f619099f92
+2026-06-11 21:42:19,921 - httpx - INFO - HTTP Request: POST https://api.anthropic.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-11 21:42:38,600 - openevolve.evaluator - INFO - Evaluated program db75571a-9f20-4151-a107-b3c7b0977344 in 18.67s: combined_score=105.3431, score=105.3431, geomean_us=9492.7870
+2026-06-11 21:42:38,604 - openevolve.llm.ensemble - INFO - Sampled model: claude-sonnet-4-6
+2026-06-11 21:42:38,607 - openevolve.database - INFO - New MAP-Elites cell occupied in island 1: {'complexity': 0, 'diversity': 9}
+2026-06-11 21:42:38,610 - openevolve.process_parallel - INFO - Iteration 2: Program db75571a-9f20-4151-a107-b3c7b0977344 (parent: 2084f434-b83b-483e-9366-3c56b9a36b80) completed in 54.38s
+2026-06-11 21:42:38,612 - openevolve.process_parallel - INFO - Metrics: combined_score=105.3431, score=105.3431, geomean_us=9492.7870
+2026-06-11 21:42:59,855 - httpx - INFO - HTTP Request: POST https://api.anthropic.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-11 21:43:19,178 - openevolve.evaluator - INFO - Evaluated program 7013159c-eb19-4c38-8c9f-5b5b9c979c38 in 19.31s: combined_score=106.9731, score=106.9731, geomean_us=9348.1440
+2026-06-11 21:43:19,181 - openevolve.llm.ensemble - INFO - Sampled model: claude-sonnet-4-6
+2026-06-11 21:43:19,190 - openevolve.database - INFO - New MAP-Elites cell occupied in island 0: {'complexity': 0, 'diversity': 9}
+2026-06-11 21:43:19,191 - openevolve.database - INFO - New best program 7013159c-eb19-4c38-8c9f-5b5b9c979c38 replaces 23118045-94cf-4b78-9e8f-12f619099f92 (combined_score: 106.8323 → 106.9731, +0.1408)
+2026-06-11 21:43:19,193 - openevolve.process_parallel - INFO - Iteration 3: Program 7013159c-eb19-4c38-8c9f-5b5b9c979c38 (parent: 2084f434-b83b-483e-9366-3c56b9a36b80) completed in 40.58s
+2026-06-11 21:43:19,194 - openevolve.process_parallel - INFO - Metrics: combined_score=106.9731, score=106.9731, geomean_us=9348.1440
+2026-06-11 21:43:19,195 - openevolve.process_parallel - INFO - 🌟 New best solution found at iteration 3: 7013159c-eb19-4c38-8c9f-5b5b9c979c38
+2026-06-11 21:43:47,082 - httpx - INFO - HTTP Request: POST https://api.anthropic.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-11 21:43:54,718 - openevolve.evaluator - INFO - Evaluated program 705ae40f-1c56-4133-a9b4-9ca93bb00b8d in 7.63s: score=0.0000, error=Correctness check failed — see test_details
+2026-06-11 21:43:54,724 - openevolve.llm.ensemble - INFO - Sampled model: claude-sonnet-4-6
+2026-06-11 21:43:54,726 - openevolve.database - INFO - New MAP-Elites cell occupied in island 1: {'complexity': 5, 'diversity': 3}
+2026-06-11 21:43:54,733 - openevolve.process_parallel - INFO - Iteration 4: Program 705ae40f-1c56-4133-a9b4-9ca93bb00b8d (parent: db75571a-9f20-4151-a107-b3c7b0977344) completed in 35.54s
+2026-06-11 21:43:54,737 - openevolve.process_parallel - INFO - Metrics: score=0.0000, error=Correctness check failed — see test_details
+2026-06-11 21:43:54,742 - openevolve.process_parallel - WARNING - ⚠️  No 'combined_score' metric found in evaluation results. Using average of all numeric metrics (0.0000) for evolution guidance. For better evolution results, please modify your evaluator to return a 'combined_score' metric that properly weights different aspects of program performance.
+2026-06-11 21:44:20,603 - httpx - INFO - HTTP Request: POST https://api.anthropic.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-11 21:44:39,111 - openevolve.evaluator - INFO - Evaluated program b0d2ffd1-a77e-4872-8d22-68f7321c494e in 18.50s: combined_score=106.9654, score=106.9654, geomean_us=9348.8190
+2026-06-11 21:44:39,114 - openevolve.llm.ensemble - INFO - Sampled model: claude-sonnet-4-6
+2026-06-11 21:44:39,123 - openevolve.database - INFO - New MAP-Elites cell occupied in island 0: {'complexity': 0, 'diversity': 6}
+2026-06-11 21:44:39,124 - openevolve.process_parallel - INFO - Iteration 5: Program b0d2ffd1-a77e-4872-8d22-68f7321c494e (parent: 2084f434-b83b-483e-9366-3c56b9a36b80) completed in 44.39s
+2026-06-11 21:44:39,125 - openevolve.process_parallel - INFO - Metrics: combined_score=106.9654, score=106.9654, geomean_us=9348.8190
+2026-06-11 21:44:39,126 - openevolve.process_parallel - INFO - Checkpoint interval reached at iteration 5
+2026-06-11 21:44:39,127 - openevolve.database - INFO - Island Status:
+2026-06-11 21:44:39,128 - openevolve.database - INFO -  * Island 0: 4 programs, best=106.9731, avg=102.8335, diversity=299.48, gen=3 (best: 7013159c-eb19-4c38-8c9f-5b5b9c979c38)
+2026-06-11 21:44:39,130 - openevolve.database - INFO -    Island 1: 2 programs, best=105.3431, avg=52.6716, diversity=73.90, gen=2 (best: db75571a-9f20-4151-a107-b3c7b0977344)
+2026-06-11 21:44:39,229 - openevolve.database - INFO - Saved database with 6 programs to trimul_kernel/openevolve_runs/run1/checkpoints/checkpoint_5
+2026-06-11 21:44:39,249 - openevolve.controller - INFO - Saved best program at checkpoint 5 with metrics: combined_score=106.9731, score=106.9731, geomean_us=9348.1440
+2026-06-11 21:44:39,249 - openevolve.controller - INFO - Saved checkpoint at iteration 5 to trimul_kernel/openevolve_runs/run1/checkpoints/checkpoint_5
+2026-06-11 21:45:06,991 - httpx - INFO - HTTP Request: POST https://api.anthropic.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-11 21:45:24,362 - openevolve.evaluator - INFO - Evaluated program 79404e57-6634-4196-9a0a-98b9bec04af1 in 17.36s: combined_score=135.7887, score=135.7887, geomean_us=7364.3840
+2026-06-11 21:45:24,371 - openevolve.llm.ensemble - INFO - Sampled model: claude-sonnet-4-6
+2026-06-11 21:45:24,380 - openevolve.database - INFO - New MAP-Elites cell occupied in island 1: {'complexity': 3, 'diversity': 3}
+2026-06-11 21:45:24,381 - openevolve.database - INFO - New best program 79404e57-6634-4196-9a0a-98b9bec04af1 replaces 7013159c-eb19-4c38-8c9f-5b5b9c979c38 (combined_score: 106.9731 → 135.7887, +28.8156)
+2026-06-11 21:45:24,382 - openevolve.process_parallel - INFO - Iteration 6: Program 79404e57-6634-4196-9a0a-98b9bec04af1 (parent: db75571a-9f20-4151-a107-b3c7b0977344) completed in 45.25s
+2026-06-11 21:45:24,384 - openevolve.process_parallel - INFO - Metrics: combined_score=135.7887, score=135.7887, geomean_us=7364.3840
+2026-06-11 21:45:24,384 - openevolve.process_parallel - INFO - 🌟 New best solution found at iteration 6: 79404e57-6634-4196-9a0a-98b9bec04af1
+2026-06-11 21:45:44,304 - httpx - INFO - HTTP Request: POST https://api.anthropic.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-11 21:45:51,597 - openevolve.evaluator - INFO - Evaluated program 27aca313-e270-4302-8954-340fddf0d86b in 7.28s: score=0.0000, error=Correctness check failed — see test_details
+2026-06-11 21:45:51,601 - openevolve.llm.ensemble - INFO - Sampled model: claude-sonnet-4-6
+2026-06-11 21:45:51,607 - openevolve.database - INFO - New MAP-Elites cell occupied in island 0: {'complexity': 1, 'diversity': 4}
+2026-06-11 21:45:51,609 - openevolve.process_parallel - INFO - Iteration 7: Program 27aca313-e270-4302-8954-340fddf0d86b (parent: 7013159c-eb19-4c38-8c9f-5b5b9c979c38) completed in 27.23s
+2026-06-11 21:45:51,611 - openevolve.process_parallel - INFO - Metrics: score=0.0000, error=Correctness check failed — see test_details
+2026-06-11 21:46:15,373 - httpx - INFO - HTTP Request: POST https://api.anthropic.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-11 21:46:31,812 - openevolve.evaluator - INFO - Evaluated program 62a71bf1-74a0-47a2-8465-ba82ca2be686 in 16.43s: combined_score=135.0908, score=135.0908, geomean_us=7402.4270
+2026-06-11 21:46:31,818 - openevolve.llm.ensemble - INFO - Sampled model: claude-sonnet-4-6
+2026-06-11 21:46:31,825 - openevolve.process_parallel - INFO - Iteration 8: Program 62a71bf1-74a0-47a2-8465-ba82ca2be686 (parent: db75571a-9f20-4151-a107-b3c7b0977344) completed in 40.22s
+2026-06-11 21:46:31,828 - openevolve.process_parallel - INFO - Metrics: combined_score=135.0908, score=135.0908, geomean_us=7402.4270
+2026-06-11 21:46:53,112 - httpx - INFO - HTTP Request: POST https://api.anthropic.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-11 21:47:03,960 - openevolve.evaluator - INFO - Evaluated program 7b13bc72-8244-4ed8-8c68-02c69df1c5a8 in 10.84s: score=0.0000, error=Benchmark correctness: max_diff=0.031765, avg_diff=0.003474
+2026-06-11 21:47:03,964 - openevolve.llm.ensemble - INFO - Sampled model: claude-sonnet-4-6
+2026-06-11 21:47:03,972 - openevolve.database - INFO - New MAP-Elites cell occupied in island 0: {'complexity': 1, 'diversity': 3}
+2026-06-11 21:47:03,974 - openevolve.process_parallel - INFO - Iteration 9: Program 7b13bc72-8244-4ed8-8c68-02c69df1c5a8 (parent: 7013159c-eb19-4c38-8c9f-5b5b9c979c38) completed in 32.14s
+2026-06-11 21:47:03,975 - openevolve.process_parallel - INFO - Metrics: score=0.0000, error=Benchmark correctness: max_diff=0.031765, avg_diff=0.003474
+2026-06-11 21:47:19,605 - httpx - INFO - HTTP Request: POST https://api.anthropic.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-11 21:47:27,492 - openevolve.evaluator - INFO - Evaluated program b32e9f1b-0070-4d77-b26c-3f5a3f4dd495 in 7.88s: score=0.0000, error=Correctness check failed — see test_details
+2026-06-11 21:47:27,503 - openevolve.llm.ensemble - INFO - Sampled model: claude-sonnet-4-6
+2026-06-11 21:47:27,507 - openevolve.database - INFO - New MAP-Elites cell occupied in island 1: {'complexity': 3, 'diversity': 2}
+2026-06-11 21:47:27,511 - openevolve.process_parallel - INFO - Iteration 10: Program b32e9f1b-0070-4d77-b26c-3f5a3f4dd495 (parent: 79404e57-6634-4196-9a0a-98b9bec04af1) completed in 23.54s
+2026-06-11 21:47:27,512 - openevolve.process_parallel - INFO - Metrics: score=0.0000, error=Correctness check failed — see test_details
+2026-06-11 21:47:27,514 - openevolve.process_parallel - INFO - Checkpoint interval reached at iteration 10
+2026-06-11 21:47:27,515 - openevolve.database - INFO - Island Status:
+2026-06-11 21:47:27,516 - openevolve.database - INFO -  * Island 0: 6 programs, best=106.9731, avg=68.5556, diversity=359.98, gen=5 (best: 7013159c-eb19-4c38-8c9f-5b5b9c979c38)
+2026-06-11 21:47:27,517 - openevolve.database - INFO -    Island 1: 5 programs, best=135.7887, avg=75.2445, diversity=68.65, gen=5 (best: 79404e57-6634-4196-9a0a-98b9bec04af1)
+2026-06-11 21:47:27,740 - openevolve.database - INFO - Saved database with 11 programs to trimul_kernel/openevolve_runs/run1/checkpoints/checkpoint_10
+2026-06-11 21:47:27,764 - openevolve.controller - INFO - Saved best program at checkpoint 10 with metrics: combined_score=135.7887, score=135.7887, geomean_us=7364.3840
+2026-06-11 21:47:27,765 - openevolve.controller - INFO - Saved checkpoint at iteration 10 to trimul_kernel/openevolve_runs/run1/checkpoints/checkpoint_10
+2026-06-11 21:47:44,676 - httpx - INFO - HTTP Request: POST https://api.anthropic.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-11 21:48:02,478 - openevolve.evaluator - INFO - Evaluated program 360585f6-2f6c-4cea-b496-e525d96f060d in 17.79s: combined_score=122.9925, score=122.9925, geomean_us=8130.5790
+2026-06-11 21:48:02,484 - openevolve.llm.ensemble - INFO - Sampled model: claude-sonnet-4-6
+2026-06-11 21:48:02,493 - openevolve.database - INFO - New MAP-Elites cell occupied in island 0: {'complexity': 0, 'diversity': 3}
+2026-06-11 21:48:02,495 - openevolve.process_parallel - INFO - Iteration 11: Program 360585f6-2f6c-4cea-b496-e525d96f060d (parent: 7013159c-eb19-4c38-8c9f-5b5b9c979c38) completed in 34.98s
+2026-06-11 21:48:02,496 - openevolve.process_parallel - INFO - Metrics: combined_score=122.9925, score=122.9925, geomean_us=8130.5790
+2026-06-11 21:48:17,751 - httpx - INFO - HTTP Request: POST https://api.anthropic.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-11 21:48:34,567 - openevolve.evaluator - INFO - Evaluated program f2248373-c77b-479e-9db9-9959b2b7808f in 16.81s: combined_score=135.4720, score=135.4720, geomean_us=7381.5980
+2026-06-11 21:48:34,572 - openevolve.llm.ensemble - INFO - Sampled model: claude-sonnet-4-6
+2026-06-11 21:48:34,577 - openevolve.database - INFO - New MAP-Elites cell occupied in island 1: {'complexity': 5, 'diversity': 2}
+2026-06-11 21:48:34,579 - openevolve.process_parallel - INFO - Iteration 12: Program f2248373-c77b-479e-9db9-9959b2b7808f (parent: 705ae40f-1c56-4133-a9b4-9ca93bb00b8d) completed in 32.09s
+2026-06-11 21:48:34,580 - openevolve.process_parallel - INFO - Metrics: combined_score=135.4720, score=135.4720, geomean_us=7381.5980
+2026-06-11 21:48:48,321 - httpx - INFO - HTTP Request: POST https://api.anthropic.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-11 21:49:06,387 - openevolve.evaluator - INFO - Evaluated program d367e5a6-3ac9-48a2-ab0c-a0071bfe33c6 in 18.06s: combined_score=123.1499, score=123.1499, geomean_us=8120.1820
+2026-06-11 21:49:06,394 - openevolve.llm.ensemble - INFO - Sampled model: claude-sonnet-4-6
+2026-06-11 21:49:06,400 - openevolve.database - INFO - Island 0 MAP-Elites cell improved: {'complexity': 0, 'diversity': 3} (fitness: 122.992 -> 123.150)
+2026-06-11 21:49:06,402 - openevolve.process_parallel - INFO - Iteration 13: Program d367e5a6-3ac9-48a2-ab0c-a0071bfe33c6 (parent: 7013159c-eb19-4c38-8c9f-5b5b9c979c38) completed in 31.82s
+2026-06-11 21:49:06,409 - openevolve.process_parallel - INFO - Metrics: combined_score=123.1499, score=123.1499, geomean_us=8120.1820
+2026-06-11 21:49:24,326 - httpx - INFO - HTTP Request: POST https://api.anthropic.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-11 21:49:31,782 - openevolve.evaluator - INFO - Evaluated program f927e170-45bf-4d3e-9907-03f0e004c289 in 7.45s: score=0.0000, error=Correctness check failed — see test_details
+2026-06-11 21:49:31,786 - openevolve.llm.ensemble - INFO - Sampled model: claude-sonnet-4-6
+2026-06-11 21:49:31,789 - openevolve.process_parallel - INFO - Iteration 14: Program f927e170-45bf-4d3e-9907-03f0e004c289 (parent: f2248373-c77b-479e-9db9-9959b2b7808f) completed in 25.39s
+2026-06-11 21:49:31,790 - openevolve.process_parallel - INFO - Metrics: score=0.0000, error=Correctness check failed — see test_details
+2026-06-11 21:49:56,027 - httpx - INFO - HTTP Request: POST https://api.anthropic.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-11 21:50:13,704 - openevolve.evaluator - INFO - Evaluated program 127b4616-7a99-4bb3-9629-a889526d329e in 17.67s: combined_score=122.9405, score=122.9405, geomean_us=8134.0190
+2026-06-11 21:50:13,713 - openevolve.llm.ensemble - INFO - Sampled model: claude-sonnet-4-6
+2026-06-11 21:50:13,718 - openevolve.process_parallel - INFO - Iteration 15: Program 127b4616-7a99-4bb3-9629-a889526d329e (parent: 23118045-94cf-4b78-9e8f-12f619099f92) completed in 41.92s
+2026-06-11 21:50:13,719 - openevolve.process_parallel - INFO - Metrics: combined_score=122.9405, score=122.9405, geomean_us=8134.0190
+2026-06-11 21:50:13,720 - openevolve.process_parallel - INFO - Checkpoint interval reached at iteration 15
+2026-06-11 21:50:13,722 - openevolve.database - INFO - Island Status:
+2026-06-11 21:50:13,724 - openevolve.database - INFO -  * Island 0: 8 programs, best=123.1499, avg=82.1780, diversity=223.32, gen=8 (best: d367e5a6-3ac9-48a2-ab0c-a0071bfe33c6)
+2026-06-11 21:50:13,726 - openevolve.database - INFO -    Island 1: 7 programs, best=135.7887, avg=73.0992, diversity=68.65, gen=7 (best: 79404e57-6634-4196-9a0a-98b9bec04af1)
+2026-06-11 21:50:14,028 - openevolve.database - INFO - Saved database with 16 programs to trimul_kernel/openevolve_runs/run1/checkpoints/checkpoint_15
+2026-06-11 21:50:14,055 - openevolve.controller - INFO - Saved best program at checkpoint 15 with metrics: combined_score=135.7887, score=135.7887, geomean_us=7364.3840
+2026-06-11 21:50:14,057 - openevolve.controller - INFO - Saved checkpoint at iteration 15 to trimul_kernel/openevolve_runs/run1/checkpoints/checkpoint_15
+2026-06-11 21:50:35,242 - httpx - INFO - HTTP Request: POST https://api.anthropic.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-11 21:50:44,378 - openevolve.evaluator - INFO - Evaluated program 862153e5-d121-486e-b363-bc6f7dc0d0fd in 9.13s: score=0.0000, error=Benchmark correctness: max_diff=0.030483, avg_diff=0.002633
+2026-06-11 21:50:44,382 - openevolve.llm.ensemble - INFO - Sampled model: claude-sonnet-4-6
+2026-06-11 21:50:44,390 - openevolve.process_parallel - INFO - Iteration 16: Program 862153e5-d121-486e-b363-bc6f7dc0d0fd (parent: db75571a-9f20-4151-a107-b3c7b0977344) completed in 30.67s
+2026-06-11 21:50:44,393 - openevolve.process_parallel - INFO - Metrics: score=0.0000, error=Benchmark correctness: max_diff=0.030483, avg_diff=0.002633
+2026-06-11 21:51:02,134 - httpx - INFO - HTTP Request: POST https://api.anthropic.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-11 21:51:10,234 - openevolve.evaluator - INFO - Evaluated program bdd371ee-ad97-4538-942d-ba5ef14201d2 in 8.10s: score=0.0000, error=Correctness check failed — see test_details
+2026-06-11 21:51:10,240 - openevolve.llm.ensemble - INFO - Sampled model: claude-sonnet-4-6
+2026-06-11 21:51:10,241 - openevolve.database - INFO - New MAP-Elites cell occupied in island 0: {'complexity': 0, 'diversity': 4}
+2026-06-11 21:51:10,242 - openevolve.process_parallel - INFO - Iteration 17: Program bdd371ee-ad97-4538-942d-ba5ef14201d2 (parent: d367e5a6-3ac9-48a2-ab0c-a0071bfe33c6) completed in 25.86s
+2026-06-11 21:51:10,244 - openevolve.process_parallel - INFO - Metrics: score=0.0000, error=Correctness check failed — see test_details
+2026-06-11 21:51:22,623 - httpx - INFO - HTTP Request: POST https://api.anthropic.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-11 21:51:33,059 - openevolve.evaluator - INFO - Evaluated program 826e3d27-d365-45fd-b3a1-ea8c3b8074c6 in 10.43s: score=0.0000, error=Benchmark correctness: max_diff=0.027275, avg_diff=0.002788
+2026-06-11 21:51:33,064 - openevolve.llm.ensemble - INFO - Sampled model: claude-sonnet-4-6
+2026-06-11 21:51:33,068 - openevolve.process_parallel - INFO - Iteration 18: Program 826e3d27-d365-45fd-b3a1-ea8c3b8074c6 (parent: 79404e57-6634-4196-9a0a-98b9bec04af1) completed in 22.82s
+2026-06-11 21:51:33,081 - openevolve.process_parallel - INFO - Metrics: score=0.0000, error=Benchmark correctness: max_diff=0.027275, avg_diff=0.002788
+2026-06-11 21:51:49,405 - httpx - INFO - HTTP Request: POST https://api.anthropic.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-11 21:52:07,587 - openevolve.evaluator - INFO - Evaluated program dc560091-8dbc-4636-a880-e109b7c5ee26 in 18.17s: combined_score=123.5860, score=123.5860, geomean_us=8091.5290
+2026-06-11 21:52:07,591 - openevolve.llm.ensemble - INFO - Sampled model: claude-sonnet-4-6
+2026-06-11 21:52:07,597 - openevolve.database - INFO - Island 0 MAP-Elites cell improved: {'complexity': 0, 'diversity': 4} (fitness: 0.000 -> 123.586)
+2026-06-11 21:52:07,599 - openevolve.process_parallel - INFO - Iteration 19: Program dc560091-8dbc-4636-a880-e109b7c5ee26 (parent: bdd371ee-ad97-4538-942d-ba5ef14201d2) completed in 34.53s
+2026-06-11 21:52:07,600 - openevolve.process_parallel - INFO - Metrics: combined_score=123.5860, score=123.5860, geomean_us=8091.5290
+2026-06-11 21:52:29,317 - httpx - INFO - HTTP Request: POST https://api.anthropic.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-11 21:52:39,795 - openevolve.evaluator - INFO - Evaluated program c08f9dcd-1de1-4786-a0ee-598f922b74c1 in 10.47s: score=0.0000, error=Benchmark correctness: max_diff=0.035002, avg_diff=0.001714
+2026-06-11 21:52:39,798 - openevolve.llm.ensemble - INFO - Sampled model: claude-sonnet-4-6
+2026-06-11 21:52:39,802 - openevolve.database - INFO - Population size (21) exceeds limit (20), removing 1 programs
+2026-06-11 21:52:39,810 - openevolve.database - INFO - Population size after cleanup: 20
+2026-06-11 21:52:39,812 - openevolve.process_parallel - INFO - Iteration 20: Program c08f9dcd-1de1-4786-a0ee-598f922b74c1 (parent: db75571a-9f20-4151-a107-b3c7b0977344) completed in 32.21s
+2026-06-11 21:52:39,816 - openevolve.process_parallel - INFO - Metrics: score=0.0000, error=Benchmark correctness: max_diff=0.035002, avg_diff=0.001714
+2026-06-11 21:52:39,817 - openevolve.process_parallel - INFO - Checkpoint interval reached at iteration 20
+2026-06-11 21:52:39,820 - openevolve.database - INFO - Island Status:
+2026-06-11 21:52:39,822 - openevolve.database - INFO -  * Island 0: 9 programs, best=123.5860, avg=86.7789, diversity=223.32, gen=10 (best: dc560091-8dbc-4636-a880-e109b7c5ee26)
+2026-06-11 21:52:39,823 - openevolve.database - INFO -    Island 1: 9 programs, best=135.7887, avg=56.8550, diversity=7.78, gen=10 (best: 79404e57-6634-4196-9a0a-98b9bec04af1)
+2026-06-11 21:52:40,413 - openevolve.database - INFO - Saved database with 20 programs to trimul_kernel/openevolve_runs/run1/checkpoints/checkpoint_20
+2026-06-11 21:52:40,440 - openevolve.controller - INFO - Saved best program at checkpoint 20 with metrics: combined_score=135.7887, score=135.7887, geomean_us=7364.3840
+2026-06-11 21:52:40,441 - openevolve.controller - INFO - Saved checkpoint at iteration 20 to trimul_kernel/openevolve_runs/run1/checkpoints/checkpoint_20
+2026-06-11 21:52:56,179 - httpx - INFO - HTTP Request: POST https://api.anthropic.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-11 21:53:13,833 - openevolve.evaluator - INFO - Evaluated program 97df2b8b-9b25-4854-aa6a-9cd7cb99c702 in 17.65s: combined_score=123.7269, score=123.7269, geomean_us=8082.3140
+2026-06-11 21:53:13,839 - openevolve.llm.ensemble - INFO - Sampled model: claude-sonnet-4-6
+2026-06-11 21:53:13,847 - openevolve.database - INFO - Island 0 MAP-Elites cell improved: {'complexity': 0, 'diversity': 3} (fitness: 123.150 -> 123.727)
+2026-06-11 21:53:13,849 - openevolve.database - INFO - Population size (21) exceeds limit (20), removing 1 programs
+2026-06-11 21:53:13,851 - openevolve.database - INFO - Population size after cleanup: 20
+2026-06-11 21:53:13,852 - openevolve.process_parallel - INFO - Iteration 21: Program 97df2b8b-9b25-4854-aa6a-9cd7cb99c702 (parent: d367e5a6-3ac9-48a2-ab0c-a0071bfe33c6) completed in 34.04s
+2026-06-11 21:53:13,854 - openevolve.process_parallel - INFO - Metrics: combined_score=123.7269, score=123.7269, geomean_us=8082.3140
+2026-06-11 21:53:35,048 - httpx - INFO - HTTP Request: POST https://api.anthropic.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-11 21:53:51,790 - openevolve.evaluator - INFO - Evaluated program 628d5b08-42f5-4e0c-849b-0eaa4c55bb68 in 16.73s: combined_score=134.7590, score=134.7590, geomean_us=7420.6560
+2026-06-11 21:53:51,794 - openevolve.llm.ensemble - INFO - Sampled model: claude-sonnet-4-6
+2026-06-11 21:53:51,802 - openevolve.database - INFO - New MAP-Elites cell occupied in island 1: {'complexity': 2, 'diversity': 2}
+2026-06-11 21:53:51,816 - openevolve.database - INFO - Population size (21) exceeds limit (20), removing 1 programs
+2026-06-11 21:53:51,819 - openevolve.database - INFO - Population size after cleanup: 20
+2026-06-11 21:53:51,821 - openevolve.process_parallel - INFO - Iteration 22: Program 628d5b08-42f5-4e0c-849b-0eaa4c55bb68 (parent: db75571a-9f20-4151-a107-b3c7b0977344) completed in 37.95s
+2026-06-11 21:53:51,822 - openevolve.process_parallel - INFO - Metrics: combined_score=134.7590, score=134.7590, geomean_us=7420.6560
+2026-06-11 21:54:11,316 - httpx - INFO - HTTP Request: POST https://api.anthropic.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-11 21:54:21,892 - openevolve.evaluator - INFO - Evaluated program 61126877-0162-4e65-8447-c953765a154d in 10.57s: score=0.0000, error=Benchmark correctness: max_diff=0.028037, avg_diff=0.003033
+2026-06-11 21:54:21,897 - openevolve.llm.ensemble - INFO - Sampled model: claude-sonnet-4-6
+2026-06-11 21:54:21,902 - openevolve.database - INFO - Population size (21) exceeds limit (20), removing 1 programs
+2026-06-11 21:54:21,903 - openevolve.database - INFO - Population size after cleanup: 20
+2026-06-11 21:54:21,911 - openevolve.process_parallel - INFO - Iteration 23: Program 61126877-0162-4e65-8447-c953765a154d (parent: b0d2ffd1-a77e-4872-8d22-68f7321c494e) completed in 30.10s
+2026-06-11 21:54:21,912 - openevolve.process_parallel - INFO - Metrics: score=0.0000, error=Benchmark correctness: max_diff=0.028037, avg_diff=0.003033
+2026-06-11 21:54:31,386 - httpx - INFO - HTTP Request: POST https://api.anthropic.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-11 21:54:38,409 - openevolve.evaluator - INFO - Evaluated program da9e7be8-44e5-484a-95a4-32e5c8193fdb in 7.02s: score=0.0000, error=Correctness check failed — see test_details
+2026-06-11 21:54:38,416 - openevolve.llm.ensemble - INFO - Sampled model: claude-sonnet-4-6
+2026-06-11 21:54:38,424 - openevolve.database - INFO - New MAP-Elites cell occupied in island 1: {'complexity': 3, 'diversity': 2}
+2026-06-11 21:54:38,427 - openevolve.database - INFO - Population size (21) exceeds limit (20), removing 1 programs
+2026-06-11 21:54:38,431 - openevolve.database - INFO - Population size after cleanup: 20
+2026-06-11 21:54:38,435 - openevolve.process_parallel - INFO - Iteration 24: Program da9e7be8-44e5-484a-95a4-32e5c8193fdb (parent: 826e3d27-d365-45fd-b3a1-ea8c3b8074c6) completed in 16.52s
+2026-06-11 21:54:38,443 - openevolve.process_parallel - INFO - Metrics: score=0.0000, error=Correctness check failed — see test_details
+2026-06-11 21:55:01,443 - httpx - INFO - HTTP Request: POST https://api.anthropic.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-06-11 21:55:19,416 - openevolve.evaluator - INFO - Evaluated program e7d8f423-3e39-43bb-8b1c-455b90de7dd7 in 17.97s: combined_score=123.8498, score=123.8498, geomean_us=8074.2940
+2026-06-11 21:55:19,423 - openevolve.database - INFO - New MAP-Elites cell occupied in island 0: {'complexity': 1, 'diversity': 2}
+2026-06-11 21:55:19,424 - openevolve.database - INFO - Population size (21) exceeds limit (20), removing 1 programs
+2026-06-11 21:55:19,425 - openevolve.database - INFO - Population size after cleanup: 20
+2026-06-11 21:55:19,427 - openevolve.process_parallel - INFO - Iteration 25: Program e7d8f423-3e39-43bb-8b1c-455b90de7dd7 (parent: 23118045-94cf-4b78-9e8f-12f619099f92) completed in 41.00s
+2026-06-11 21:55:19,430 - openevolve.process_parallel - INFO - Metrics: combined_score=123.8498, score=123.8498, geomean_us=8074.2940
+2026-06-11 21:55:19,431 - openevolve.process_parallel - INFO - Checkpoint interval reached at iteration 25
+2026-06-11 21:55:19,433 - openevolve.database - INFO - Island Status:
+2026-06-11 21:55:19,435 - openevolve.database - INFO -  * Island 0: 9 programs, best=123.8498, avg=100.6041, diversity=254.65, gen=13 (best: e7d8f423-3e39-43bb-8b1c-455b90de7dd7)
+2026-06-11 21:55:19,436 - openevolve.database - INFO -    Island 1: 8 programs, best=135.7887, avg=80.8067, diversity=47.05, gen=12 (best: 79404e57-6634-4196-9a0a-98b9bec04af1)
+2026-06-11 21:55:19,734 - openevolve.database - INFO - Saved database with 20 programs to trimul_kernel/openevolve_runs/run1/checkpoints/checkpoint_25
+2026-06-11 21:55:19,754 - openevolve.controller - INFO - Saved best program at checkpoint 25 with metrics: combined_score=135.7887, score=135.7887, geomean_us=7364.3840
+2026-06-11 21:55:19,755 - openevolve.controller - INFO - Saved checkpoint at iteration 25 to trimul_kernel/openevolve_runs/run1/checkpoints/checkpoint_25
+2026-06-11 21:55:19,756 - openevolve.process_parallel - INFO - ✅ Evolution completed - Maximum iterations reached
+2026-06-11 21:55:20,069 - openevolve.database - INFO - Saved database with 20 programs to trimul_kernel/openevolve_runs/run1/checkpoints/checkpoint_25
+2026-06-11 21:55:20,089 - openevolve.controller - INFO - Saved best program at checkpoint 25 with metrics: combined_score=135.7887, score=135.7887, geomean_us=7364.3840
+2026-06-11 21:55:20,090 - openevolve.controller - INFO - Saved checkpoint at iteration 25 to trimul_kernel/openevolve_runs/run1/checkpoints/checkpoint_25
+2026-06-11 21:55:20,112 - openevolve.process_parallel - INFO - Stopped process pool
+2026-06-11 21:55:20,114 - openevolve.controller - INFO - Using tracked best program: 79404e57-6634-4196-9a0a-98b9bec04af1
+2026-06-11 21:55:20,115 - openevolve.controller - INFO - Evolution complete. Best program has metrics: combined_score=135.7887, score=135.7887, geomean_us=7364.3840
+2026-06-11 21:55:20,140 - openevolve.controller - INFO - Saved best program to trimul_kernel/openevolve_runs/run1/best/best_program.py with program info to trimul_kernel/openevolve_runs/run1/best/best_program_info.json
