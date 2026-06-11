@@ -1,3 +1,4 @@
+# EVOLVE-BLOCK-START
 """
 Initial TriMul submission — PyTorch baseline with dummy Triton kernel.
 """
@@ -80,3 +81,4 @@ def custom_kernel(data):
     output = trimul(input_tensor, mask).to(torch.float32)
 
     return output
+# EVOLVE-BLOCK-END

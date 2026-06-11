@@ -1,0 +1,50 @@
+max_iterations: 25
+checkpoint_interval: 5
+
+llm:
+  primary_model: "claude-sonnet-4-6"
+  primary_model_weight: 1.0
+  secondary_model: "claude-sonnet-4-6"
+  secondary_model_weight: 0.0
+  api_base: "https://api.anthropic.com/v1"
+  temperature: 0.7
+  max_tokens: 8000
+  timeout: 180
+
+prompt:
+  system_message: >
+    You are an expert CUDA/Triton kernel engineer. Your task is to optimize a PyTorch/Triton
+    GPU kernel that implements the Triangle Multiplicative Update (TriMul) operator from AlphaFold3.
+    The kernel runs on an NVIDIA H100. The operator computes:
+    x = LayerNorm(input); left = left_proj(x) * sigmoid(left_gate(x));
+    right = right_proj(x) * sigmoid(right_gate(x));
+    left, right = left * mask, right * mask;
+    out = einsum("... i k d, ... j k d -> ... i j d", left, right);
+    out = LayerNorm(out) * sigmoid(out_gate(x));
+    return to_out(out).
+    Input: input_tensor [bs, seqlen, seqlen, dim] float32, mask [bs, seqlen, seqlen] float32.
+    Weights dict contains: norm.weight/bias (dim,), left_proj/right_proj/left_gate/right_gate/out_gate.weight
+    (hidden_dim, dim), to_out_norm.weight/bias (hidden_dim,), to_out.weight (dim, hidden_dim).
+    The function signature must remain: custom_kernel(data) where
+    data = (input_tensor, mask, weights, config) and config has keys "dim" and "hidden_dim".
+    Optimize for minimum geometric mean latency across 7 benchmark cases
+    (seqlen=256-1024, bs=1-2, dim=128-384, hidden_dim=128).
+    Focus on: fusing the 5 linear projections into one matmul, efficient N^2 contraction
+    via bmm/cuBLAS with proper layout (permute to [bs*H, N, N]), exploiting H100 tensor cores
+    with bfloat16 for the contraction, and reducing memory traffic.
+
+database:
+  population_size: 20
+  archive_size: 10
+  num_islands: 2
+  elite_selection_ratio: 0.2
+  exploitation_ratio: 0.7
+
+evaluator:
+  timeout: 600
+  cascade_thresholds: [0.5]
+  parallel_evaluations: 1
+
+cascade_evaluation: false
+diff_based_evolution: true
+max_code_length: 20000
