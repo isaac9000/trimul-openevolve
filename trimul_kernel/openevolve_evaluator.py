@@ -49,8 +49,19 @@ def _run_eval(program_path: str):
 def evaluate(program_path: str) -> dict:
     """OpenEvolve entry point — single Modal call, correctness + benchmark."""
     md, rc, stderr = _run_eval(program_path)
-    if md is None or rc != 0:
+    if md is None:
         error = stderr[:500] if stderr else f"run_eval exited {rc}"
+        return {"score": 0.0, "error": error}
+    if rc != 0:
+        # Extract actual failure details from the markdown even on non-zero exit
+        error_match = re.search(r"## Error:\n```\n(.*?)```", md, re.DOTALL)
+        diff_match = re.search(r"max_diff=([\d.]+)", md)
+        if error_match:
+            error = error_match.group(1).strip()[:500]
+        elif diff_match:
+            error = f"correctness failure: {diff_match.group(0)}"
+        else:
+            error = (stderr[:300] if stderr else "") + f" | run_eval exited {rc}"
         return {"score": 0.0, "error": error}
     m = re.search(r"Geometric mean: ⏱ ([\d.]+)", md)
     if not m:
