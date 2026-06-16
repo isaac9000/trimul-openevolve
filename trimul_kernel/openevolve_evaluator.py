@@ -30,7 +30,7 @@ def _run_eval(program_path: str):
             [PYTHON, "run_eval.py", os.path.abspath(program_path), "-o", out_path, "--mode", "leaderboard"],
             capture_output=True,
             text=True,
-            timeout=540,
+            timeout=660,
             cwd=SCRIPT_DIR,
             env={**os.environ, "PYTHONPATH": SCRIPT_DIR},
         )

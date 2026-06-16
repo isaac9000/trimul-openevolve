@@ -4,7 +4,7 @@ Deployable Modal H100 evaluator for the TriMul kernel task.
 Evaluation logic mirrors skydiscover benchmarks/gpu_mode/trimul exactly.
 
 Deploy once:
-    uv run modal deploy eval_modal_trimul_kernel.py
+    uv run modal deploy eval_modal_trimul.py
 
 Then the agent's run_eval.py calls evaluate_kernel.remote(kernel_code).
 """
@@ -51,7 +51,6 @@ BENCH_WALL_TIMEOUT_NS = 120e9
 BENCH_NO_GRAD = False
 BENCH_MAX_REPEATS = 100
 BENCH_MAX_TIME_NS = 10e9
-BENCH_WARMUP_STYLE = "tiny_benchmark"
 
 # ── Modal image ───────────────────────────────────────────────────────────────
 

@@ -4,7 +4,7 @@ CLI wrapper that submits a TriMul kernel to the deployed Modal H100 evaluator
 and writes results.json in markdown format the agent can parse.
 
 Deploy the evaluator once before running:
-    uv run modal deploy eval_modal_trimul_kernel.py
+    uv run modal deploy eval_modal_trimul.py
 
 Usage:
     python run_eval.py submission.py -o results.json
