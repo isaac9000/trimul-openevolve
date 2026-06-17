@@ -28,9 +28,7 @@ prompt:
     data = (input_tensor, mask, weights, config) and config has keys "dim" and "hidden_dim".
     Optimize for minimum geometric mean latency across 7 benchmark cases
     (seqlen=256-1024, bs=1-2, dim=128-384, hidden_dim=128).
-    Focus on: fusing the 5 linear projections into one matmul, efficient N^2 contraction
-    via bmm/cuBLAS with proper layout (permute to [bs*H, N, N]), exploiting H100 tensor cores
-    with bfloat16 for the contraction, and reducing memory traffic.
+    
 
 database:
   population_size: 20
