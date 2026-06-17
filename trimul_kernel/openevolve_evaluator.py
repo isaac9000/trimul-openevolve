@@ -51,7 +51,7 @@ def evaluate(program_path: str) -> dict:
     md, rc, stderr = _run_eval(program_path)
     if md is None:
         error = stderr[:500] if stderr else f"run_eval exited {rc}"
-        return {"score": 0.0, "error": error}
+        return {"combined_score": 0.0, "score": 0.0, "error": error}
     if rc != 0:
         # Extract actual failure details from the markdown even on non-zero exit
         error_match = re.search(r"## Error:\n```\n(.*?)```", md, re.DOTALL)
@@ -62,10 +62,10 @@ def evaluate(program_path: str) -> dict:
             error = f"correctness failure: {diff_match.group(0)}"
         else:
             error = (stderr[:300] if stderr else "") + f" | run_eval exited {rc}"
-        return {"score": 0.0, "error": error}
+        return {"combined_score": 0.0, "score": 0.0, "error": error}
     m = re.search(r"Geometric mean: ⏱ ([\d.]+)", md)
     if not m:
-        return {"score": 0.0, "error": "could not parse geomean from results"}
+        return {"combined_score": 0.0, "score": 0.0, "error": "could not parse geomean from results"}
     geomean_us = float(m.group(1))
     score = 1e6 / geomean_us
     return {
